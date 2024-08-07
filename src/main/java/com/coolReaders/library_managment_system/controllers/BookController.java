@@ -1,6 +1,10 @@
 package com.coolReaders.library_managment_system.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,6 +12,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.coolReaders.library_managment_system.models.Book;
 import com.coolReaders.library_managment_system.repositories.BookRepository;
+import com.coolReaders.library_managment_system.responses.ApiResponse;
+import com.coolReaders.library_managment_system.services.BookService;
+
+import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 
@@ -16,23 +28,32 @@ import com.coolReaders.library_managment_system.repositories.BookRepository;
 public class BookController {
 
     @Autowired
-    private BookRepository bookRepository;
+    private BookService bookService ; 
 
     @PostMapping
-    public Book addBook( @RequestBody Book book ) 
+    public ResponseEntity<ApiResponse<Book>> addBook(@Valid @RequestBody Book book ) 
     {
-
-        // System.out.println(book);
-        // ok now i want to put this book in a the database 
-        // so we will use a repository which have the main function for crud 
-        Book x = bookRepository.save(book) ; 
-
-        return x ; 
+        Book savedBook = bookService.saveBook(book) ;
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse<>("Book Created Succesfully", savedBook)) ; 
     }
 
 
-  
+    @GetMapping()
+    public ResponseEntity<ApiResponse<List<Book>>> getBooks(){
+        List<Book> books = bookService.getBooks();
+        String message = books.isEmpty() ? "No books available." : "Books retrieved successfully.";
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>(message, books)) ;   
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse<List<Book>>> getBookById(@PathVariable Long id){
+        Book book = bookService.getBookById(id);
+        //String message = books.isEmpty() ? "No books available." : "Books retrieved successfully.";
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>(message, books)) ;   
+    }
     
 
+
+    
     
 }

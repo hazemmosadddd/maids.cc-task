@@ -4,8 +4,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;;
 
 @Entity
+
 @Table(name = "books")
 public class Book {
 
@@ -13,9 +16,19 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id ; 
 
+    @NotNull(message = "Title cannot be blank")
     private String title ; 
+
+    @NotNull(message = "Author cannot be null")
     private String author ; 
-    private String isbn ; 
+    
+
+    @NotNull(message = "ISBN canot be null")
+    @Size(min = 10, max = 13, message = "ISBN must be between 10 and 13 characters")
+    private String isbn; 
+
+
+
     private int publicationYear ; 
 
       public Book() {
@@ -46,6 +59,24 @@ public class Book {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+    public long getId() {
+        return id;
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
+    public int getPublicationYear() {
+        return publicationYear;
+    }
+
+    public String getTitle() {
+        return title;
     }
 
     @Override
