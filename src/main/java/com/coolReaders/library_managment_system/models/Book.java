@@ -1,8 +1,13 @@
 package com.coolReaders.library_managment_system.models;
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;;
@@ -26,6 +31,15 @@ public class Book {
     @NotNull(message = "ISBN canot be null")
     @Size(min = 10, max = 13, message = "ISBN must be between 10 and 13 characters")
     private String isbn; 
+
+    @ManyToMany
+    @JoinTable(
+        name = "borrows" , 
+        joinColumns = @JoinColumn(name = "book_id") , 
+        inverseJoinColumns = @JoinColumn(name = "patron_id")
+    )
+    private List<Patron> patrons;
+
 
 
 

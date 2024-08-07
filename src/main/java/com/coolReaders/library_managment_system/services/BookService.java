@@ -26,7 +26,6 @@ public class BookService {
         Book savedBook = bookRepository.save(book); 
         return savedBook ; 
     }
-
     public List<Book> getBooks ()
     {
         return  bookRepository.findAll() ; 
@@ -35,14 +34,37 @@ public class BookService {
     {
         Optional<Book> bookOpt = bookRepository.findById(id); 
         if(!bookOpt.isPresent())
-            throw new ResourceNotFoundException("Book Dont Exist") ; 
+        throw new ResourceNotFoundException("Book does not exist.");
         
         Book book = bookOpt.get() ; 
-        return Book ; 
+        return book ; 
 
     }
+    public Book updateBookById(Long id , Book bookUpdateBody)
+    {
+        Optional<Book> bookOpt = bookRepository.findById(id) ; 
+        if (!bookOpt.isPresent())
+        throw new ResourceNotFoundException("Book does not exist.");
 
-    
+        Book newBook = bookOpt.get() ; 
+        newBook.setTitle(bookUpdateBody.getTitle());
+        newBook.setAuthor(bookUpdateBody.getAuthor());
+        newBook.setIsbn(bookUpdateBody.getIsbn());
+        newBook.setPublicationYear(bookUpdateBody.getPublicationYear());
+
+        Book updatedBook = bookRepository.save(newBook) ; 
+        
+        return updatedBook ; 
+
+    }
+    public void deleteBookById(Long id)
+    {
+        Optional<Book> bookOpt = bookRepository.findById(id) ; 
+        if (!bookOpt.isPresent())
+        throw new ResourceNotFoundException("Book does not exist.");
+        Book book = bookOpt.get() ; 
+        bookRepository.delete(book);
+    }
 
     
 }

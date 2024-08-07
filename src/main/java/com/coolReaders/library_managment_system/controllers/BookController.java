@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +17,8 @@ import com.coolReaders.library_managment_system.responses.ApiResponse;
 import com.coolReaders.library_managment_system.services.BookService;
 
 import jakarta.validation.Valid;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -46,14 +49,26 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<List<Book>>> getBookById(@PathVariable Long id){
+    public ResponseEntity<ApiResponse<Book>> getBookById(@PathVariable Long id){
         Book book = bookService.getBookById(id);
-        //String message = books.isEmpty() ? "No books available." : "Books retrieved successfully.";
-        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>(message, books)) ;   
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse<>("Book retrieved successfully.", book)) ;   
+    }
+
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ApiResponse<Book>> updateBookById(@PathVariable Long id , @RequestBody Book bookUpdateBody )
+    {
+        Book updatedBook = bookService.updateBookById(id , bookUpdateBody) ; 
+        return ResponseEntity.ok(new ApiResponse<>("Book updated successfully.", updatedBook));
+
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponse<Object>> deleteBookById(@PathVariable Long id) {
+        bookService.deleteBookById(id);
+        return ResponseEntity.ok(new ApiResponse<>("Book with id: " + id + " deleted successfully.", null));
     }
     
 
-
-    
     
 }
