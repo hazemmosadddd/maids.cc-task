@@ -32,6 +32,11 @@ public class Book {
     @Size(min = 10, max = 13, message = "ISBN must be between 10 and 13 characters")
     private String isbn; 
 
+    @NotNull
+    private int totalCopies;
+
+    private int borrowedCopies;
+
     @ManyToMany
     @JoinTable(
         name = "borrows" , 
@@ -40,15 +45,14 @@ public class Book {
     )
     private List<Patron> patrons;
 
-
-
-
     private int publicationYear ; 
 
-      public Book() {
+    public Book() {
+        this.borrowedCopies = 0 ; 
     }
 
     public Book(String title, String author, Integer publicationYear, String isbn) {
+        this() ; 
         this.title = title;
         this.author = author;
         this.publicationYear = publicationYear;
@@ -59,6 +63,20 @@ public class Book {
         this.author = author;
     }
 
+    public void setBorrowedCopies(int borrowedCopies) {
+        this.borrowedCopies = borrowedCopies;
+    }
+
+    public void setTotalCopies(int totalCopies) {
+        this.totalCopies = totalCopies;
+    }
+
+    public int getBorrowedCopies() {
+        return borrowedCopies;
+    }
+    public int getTotalCopies() {
+        return totalCopies;
+    }
     public void setId(long id) {
         this.id = id;
     }
@@ -92,6 +110,15 @@ public class Book {
     public String getTitle() {
         return title;
     }
+
+    public void setPatrons(List<Patron> patrons) {
+        this.patrons = patrons;
+    }
+    public List<Patron> getPatrons() {
+        return patrons;
+    }
+    
+    
 
     @Override
     public String toString() {

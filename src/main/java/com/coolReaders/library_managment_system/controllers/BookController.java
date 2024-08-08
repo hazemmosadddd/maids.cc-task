@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.coolReaders.library_managment_system.models.Book;
-import com.coolReaders.library_managment_system.repositories.BookRepository;
 import com.coolReaders.library_managment_system.responses.ApiResponse;
 import com.coolReaders.library_managment_system.services.BookService;
 
@@ -21,7 +20,6 @@ import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 
