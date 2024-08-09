@@ -9,8 +9,8 @@ The Library Management System manages books and patrons in a library. It provide
 ### Authentication is handled by an external service. To authenticate requests:
 
 1. **Obtain a JWT Token**: The token is provided by the external authentication service. you can use this token: 
-authToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImhhenpvMTIzIiwiaWQiOiI2NmI1ZDZlYzRiNTFjZjUxYTlhZTU3YjYiLCJpYXQiOjE3MjMyMTQ1NDB9.2B3m5abk__y0c9anwooGSaI7Er9Jws0l3zV05JLsKOc; 
- "set it in the client cookies"
+`authToken`= eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImhhenpvMTIzIiwiaWQiOiI2NmI1ZDZlYzRiNTFjZjUxYTlhZTU3YjYiLCJpYXQiOjE3MjMyMTQ1NDB9.2B3m5abk__y0c9anwooGSaI7Er9Jws0l3zV05JLsKOc; 
+ `set it in the client cookies`
 2. **Set the Token in a Cookie**: The token should be stored in a cookie on the client-side for subsequent requests. Ensure the cookie is sent with each request to access protected endpoints.
 
 
