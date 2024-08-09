@@ -6,6 +6,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -39,7 +40,7 @@ public class Patron {
     @NotNull
     private String address;
 
-    @ManyToMany(mappedBy = "patrons")
+    @ManyToMany(mappedBy = "patrons", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Book> books;
 
